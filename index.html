@@ -1047,6 +1047,287 @@ body {
     font-size: 0.78rem;
   }
 }
+/* Grade 4 teaching color-zone theme */
+:root {
+  --bg: #eef8fb;
+  --panel: rgba(255, 255, 255, 0.94);
+  --panel-solid: #ffffff;
+  --line: rgba(42, 61, 80, 0.16);
+  --text: #142338;
+  --muted: #5d6f84;
+  --blue: #2f6eea;
+  --red: #ef5b51;
+  --gold: #f5b73f;
+  --green: #1fb887;
+  --sky-zone: #dff4ff;
+  --sun-zone: #fff3c4;
+  --grass-zone: #dcf8e9;
+  --coral-zone: #ffe7df;
+  --shadow: 0 8px 0 rgba(42, 61, 80, 0.08), 0 18px 34px rgba(42, 61, 80, 0.12);
+}
+
+body {
+  background: linear-gradient(180deg, #e8f8ff 0%, #edf8ef 54%, #fff6dc 100%);
+}
+
+.hud,
+.panel-block,
+.result-board,
+.result-list li,
+.ranking-list li,
+.runner-control.segmented,
+.trend-panel,
+.calculation,
+.formula-item {
+  border: 2px solid rgba(42, 61, 80, 0.14);
+}
+
+.top-hud,
+.race-info,
+.panel-block,
+.result-board {
+  position: relative;
+  overflow: hidden;
+}
+
+.top-hud::before,
+.panel-block::before,
+.result-board::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 8px;
+  background: linear-gradient(90deg, #2f6eea 0 25%, #f5b73f 25% 50%, #1fb887 50% 75%, #ef5b51 75% 100%);
+}
+
+.top-hud {
+  background: linear-gradient(135deg, rgba(223, 244, 255, 0.96), rgba(255, 255, 255, 0.96) 58%, rgba(255, 243, 196, 0.96));
+  border-color: rgba(47, 110, 234, 0.22);
+}
+
+.top-hud h1 {
+  color: #12315c;
+}
+
+.time-board {
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  background: #ffffff;
+  border: 2px solid rgba(245, 183, 63, 0.45);
+}
+
+.time-board strong {
+  color: #ef5b51;
+}
+
+.race-info {
+  border-color: rgba(31, 184, 135, 0.24);
+  background: #ffffff;
+}
+
+.race-info > div:nth-child(1) {
+  background: var(--sky-zone);
+}
+
+.race-info > div:nth-child(2) {
+  background: var(--grass-zone);
+}
+
+.race-info > div:nth-child(3) {
+  background: var(--sun-zone);
+}
+
+.control-panel {
+  background: linear-gradient(180deg, #f7fcff 0%, #eff9f2 46%, #fff8e4 100%);
+}
+
+.panel-block {
+  padding-top: 22px;
+  background: #ffffff;
+  box-shadow: var(--shadow);
+}
+
+.action-panel {
+  background: linear-gradient(180deg, #ffffff 0%, #f0f8ff 100%);
+}
+
+.control-panel .panel-block:nth-of-type(2) {
+  background: linear-gradient(180deg, #ffffff 0%, #edf7ff 100%);
+}
+
+.formula-panel {
+  background: linear-gradient(180deg, #ffffff 0%, #fff6cf 100%);
+  box-shadow: var(--shadow);
+}
+
+.ranking-panel {
+  background: linear-gradient(180deg, #ffffff 0%, #ecfbf2 100%);
+}
+
+.mode-switch {
+  border: 2px solid rgba(47, 110, 234, 0.2);
+  background: #eaf5ff;
+}
+
+.mode-button,
+.view-button,
+.primary-button,
+.plain-button {
+  border-width: 2px;
+  letter-spacing: 0;
+}
+
+.primary-button,
+.mode-button.active,
+.view-button.active {
+  border-color: #0f2c4f;
+  background: linear-gradient(180deg, #2f6eea 0%, #214eb4 100%);
+  box-shadow: 0 6px 0 #183a83, 0 14px 22px rgba(47, 110, 234, 0.22);
+}
+
+.primary-button:hover,
+.mode-button.active:hover,
+.view-button.active:hover {
+  background: linear-gradient(180deg, #3a7bff 0%, #2458c9 100%);
+}
+
+.plain-button,
+.mode-button:not(.active),
+.view-button:not(.active) {
+  border-color: rgba(42, 61, 80, 0.18);
+  background: #ffffff;
+  color: #506378;
+}
+
+.plain-button:hover,
+.mode-button:not(.active):hover,
+.view-button:not(.active):hover {
+  border-color: rgba(245, 183, 63, 0.62);
+  background: #fff7d8;
+}
+
+.slider-line {
+  padding: 10px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+input[type="range"] {
+  accent-color: #2f6eea;
+}
+
+.runner-control.segmented {
+  background: #ffffff;
+  border-color: rgba(47, 110, 234, 0.14);
+  box-shadow: 0 4px 0 rgba(47, 110, 234, 0.06);
+}
+
+.runner-control.segmented:nth-child(3n + 1) {
+  background: var(--sky-zone);
+}
+
+.runner-control.segmented:nth-child(3n + 2) {
+  background: var(--grass-zone);
+}
+
+.runner-control.segmented:nth-child(3n) {
+  background: var(--sun-zone);
+}
+
+.runner-name {
+  color: #142338;
+}
+
+.segment-line {
+  color: #53667c;
+}
+
+.calculation {
+  background: #ffffff;
+  border-color: rgba(245, 183, 63, 0.38);
+  box-shadow: inset 0 0 0 3px rgba(245, 183, 63, 0.08);
+}
+
+.formula-item {
+  background: #fff8d9;
+  border-color: rgba(245, 183, 63, 0.34);
+}
+
+.ranking-list li {
+  background: #f2fff7;
+  border-color: rgba(31, 184, 135, 0.22);
+  box-shadow: inset 5px 0 0 #1fb887;
+}
+
+.result-list li {
+  background: #f7fbff;
+}
+
+.result-list li:nth-child(3n + 1) {
+  background: var(--sky-zone);
+}
+
+.result-list li:nth-child(3n + 2) {
+  background: var(--grass-zone);
+}
+
+.result-list li:nth-child(3n) {
+  background: var(--sun-zone);
+}
+
+.trend-panel {
+  background: #ffffff;
+}
+
+.landing-kicker {
+  border-color: rgba(255, 255, 255, 0.52);
+  background: rgba(47, 110, 234, 0.72);
+}
+
+.landing-content h1 {
+  text-shadow: 0 8px 0 rgba(20, 35, 56, 0.24), 0 18px 34px rgba(0, 0, 0, 0.34);
+}
+
+.landing-button {
+  border: 2px solid rgba(20, 35, 56, 0.18);
+  background: linear-gradient(180deg, #fff5c8 0%, #f5b73f 100%);
+  color: #142338;
+  box-shadow: 0 8px 0 #c8841d, 0 18px 40px rgba(0, 0, 0, 0.26);
+}
+
+@media (max-width: 720px) {
+  .top-hud::before,
+  .panel-block::before,
+  .result-board::before {
+    height: 6px;
+  }
+
+  .top-hud {
+    background: linear-gradient(135deg, rgba(223, 244, 255, 0.97), rgba(255, 255, 255, 0.97));
+  }
+
+  .time-board {
+    padding: 5px 7px;
+  }
+
+  .control-panel {
+    background: linear-gradient(180deg, #f7fcff 0%, #f2fbf5 100%);
+  }
+
+  .panel-block {
+    padding-top: 18px;
+  }
+
+  .primary-button,
+  .mode-button.active,
+  .view-button.active {
+    box-shadow: 0 5px 0 #183a83, 0 12px 18px rgba(47, 110, 234, 0.18);
+  }
+
+  .slider-line {
+    padding: 8px;
+  }
+}
 
     </style>
   </head>
