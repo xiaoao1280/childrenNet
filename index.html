@@ -1350,6 +1350,7 @@ input[type="range"] {
   .race-app {
     display: flex;
     flex-direction: column;
+    align-items: center;
     min-height: 100svh;
   }
 
@@ -1368,6 +1369,8 @@ input[type="range"] {
   .control-panel {
     order: 2;
     width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
     height: auto;
     max-height: none;
     overflow: visible;
@@ -1375,6 +1378,10 @@ input[type="range"] {
 }
 
 @media (max-width: 720px) {
+  .race-app {
+    overflow-x: hidden;
+  }
+
   .race-stage {
     min-height: 76svh;
   }
@@ -1396,6 +1403,18 @@ input[type="range"] {
     right: 10px;
     bottom: 10px;
     margin: 0;
+  }
+
+  .control-panel {
+    max-width: 390px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .panel-block {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -2326,6 +2345,40 @@ function getAerialTargetHeight(mobileView) {
   return Math.max(baseHeight, fitByWidth, fitByDepth);
 }
 
+function getChaseCameraFrame(mobileView) {
+  const count = currentRunnerCount();
+  const points = [];
+  for (let index = 0; index < count; index += 1) {
+    const elapsed = state.time - chaseStartDelay(index);
+    const distance = getDistance(index);
+    const pose = getChaseTrackPose(distance, index, elapsed);
+    points.push(pose);
+  }
+
+  const minX = Math.min.apply(null, points.map(function(point) { return point.x; }));
+  const maxX = Math.max.apply(null, points.map(function(point) { return point.x; }));
+  const minZ = Math.min.apply(null, points.map(function(point) { return point.z; }));
+  const maxZ = Math.max.apply(null, points.map(function(point) { return point.z; }));
+  const centerX = (minX + maxX) / 2;
+  const centerZ = (minZ + maxZ) / 2;
+  const paddingX = mobileView ? 6 : 8;
+  const paddingZ = mobileView ? 8 : 10;
+  const halfWidth = Math.max(18, (maxX - minX) / 2 + paddingX);
+  const halfDepth = Math.max(14, (maxZ - minZ) / 2 + paddingZ);
+  const halfFov = THREE.MathUtils.degToRad(camera.fov) / 2;
+  const visibleHalfHeight = Math.tan(halfFov);
+  const fitByWidth = halfWidth / (visibleHalfHeight * camera.aspect);
+  const fitByDepth = halfDepth / visibleHalfHeight;
+  const minHeight = mobileView ? 48 : 38;
+  const maxHeight = mobileView ? 170 : 132;
+  const height = Math.min(maxHeight, Math.max(minHeight, fitByWidth, fitByDepth));
+
+  return {
+    position: new THREE.Vector3(centerX, height, centerZ),
+    lookAt: new THREE.Vector3(centerX, 0, centerZ),
+  };
+}
+
 function updateCamera() {
   const mobileView = camera.aspect < 0.72;
   let targetPosition;
@@ -3027,8 +3080,9 @@ updateCamera = function() {
   let lookAt;
 
   if (state.mode === "chase") {
-    targetPosition = new THREE.Vector3(0, getAerialTargetHeight(mobileView), 8);
-    lookAt = new THREE.Vector3(0, 0, 0);
+    const frame = getChaseCameraFrame(mobileView);
+    targetPosition = frame.position;
+    lookAt = frame.lookAt;
   } else if (state.cameraMode === "crowd") {
     targetPosition = new THREE.Vector3(10, mobileView ? 24 : 18, homeStraightZ - 38);
     lookAt = new THREE.Vector3(28, 1, homeStraightZ + 6);
@@ -3051,7 +3105,13 @@ updateCamera = function() {
     scene.fog.far = 182;
   }
   camera.up.set(0, state.mode === "chase" || state.cameraMode === "aerial" ? 0 : 1, state.mode === "chase" || state.cameraMode === "aerial" ? -1 : 0);
-  if (state.mode === "chase" || state.cameraMode === "aerial") {
+  if (state.mode === "chase") {
+    if (state.running || state.phase === "running") {
+      camera.position.lerp(targetPosition, 0.12);
+    } else {
+      camera.position.copy(targetPosition);
+    }
+  } else if (state.cameraMode === "aerial") {
     camera.position.copy(targetPosition);
   } else {
     camera.position.lerp(targetPosition, 0.16);
