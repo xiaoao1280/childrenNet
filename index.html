@@ -11,17 +11,17 @@
     <style>
 :root {
   color-scheme: light;
-  --bg: #e9f1f5;
-  --panel: rgba(255, 255, 255, 0.92);
-  --panel-solid: #ffffff;
-  --line: rgba(23, 33, 43, 0.14);
-  --text: #17212b;
-  --muted: #5a6875;
-  --blue: #2359c9;
-  --red: #d8433a;
-  --gold: #d99a25;
-  --green: #16845f;
-  --shadow: 0 18px 44px rgba(23, 33, 43, 0.16);
+  --bg: #eaf3f7;
+  --panel: rgba(255, 255, 255, 0.9);
+  --panel-solid: #fbfdff;
+  --line: rgba(24, 37, 51, 0.13);
+  --text: #14202c;
+  --muted: #627080;
+  --blue: #2563d8;
+  --red: #d8483f;
+  --gold: #d59624;
+  --green: #128061;
+  --shadow: 0 14px 34px rgba(24, 37, 51, 0.11);
   --radius: 8px;
 }
 
@@ -696,6 +696,355 @@ body.chase-mode .view-group {
 
   .runner-control {
     grid-template-columns: 94px 1fr 106px;
+  }
+}
+/* Visual polish */
+body {
+  background: linear-gradient(180deg, #edf6f8 0%, #e6eef4 100%);
+  text-rendering: optimizeLegibility;
+}
+
+button {
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.landing-page::before {
+  background: linear-gradient(180deg, rgba(10, 18, 28, 0.14) 0%, rgba(10, 18, 28, 0.38) 42%, rgba(10, 18, 28, 0.76) 100%);
+}
+
+.landing-content {
+  gap: 22px;
+  transform: translateY(14vh);
+}
+
+.landing-kicker {
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: var(--radius);
+  background: rgba(10, 18, 28, 0.28);
+  backdrop-filter: blur(10px);
+}
+
+.landing-content h1 {
+  max-width: 10ch;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.landing-button {
+  border: 0;
+  background: #ffffff;
+  color: #14202c;
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.34), inset 0 -2px 0 rgba(20, 32, 44, 0.08);
+}
+
+.landing-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 22px 58px rgba(0, 0, 0, 0.38), inset 0 -2px 0 rgba(20, 32, 44, 0.08);
+}
+
+.race-app {
+  grid-template-columns: minmax(0, 1fr) 420px;
+}
+
+.race-stage {
+  background: #86cee1;
+}
+
+.hud {
+  border-color: rgba(24, 37, 51, 0.12);
+  background: rgba(250, 253, 255, 0.88);
+  box-shadow: 0 12px 30px rgba(24, 37, 51, 0.12);
+}
+
+.top-hud {
+  min-height: 78px;
+}
+
+.top-hud h1 {
+  font-weight: 900;
+}
+
+.eyebrow,
+.time-board span,
+.race-info span,
+.slider-line,
+.runner-speed,
+.ranking-panel .section-title span {
+  font-weight: 650;
+}
+
+.time-board strong,
+.race-info strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.race-info > div {
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.result-overlay {
+  background: rgba(20, 32, 44, 0.22);
+}
+
+.result-board {
+  background: rgba(251, 253, 255, 0.98);
+  box-shadow: 0 26px 74px rgba(24, 37, 51, 0.28);
+}
+
+.result-list li,
+.ranking-list li {
+  border: 1px solid rgba(24, 37, 51, 0.08);
+  background: #f7fafc;
+}
+
+.result-list li:hover,
+.result-list li.active {
+  border-color: rgba(37, 99, 216, 0.3);
+  background: #edf5ff;
+  box-shadow: inset 3px 0 0 rgba(37, 99, 216, 0.72);
+}
+
+.trend-panel {
+  background: #f6fbff;
+  border-color: rgba(37, 99, 216, 0.16);
+}
+
+.control-panel {
+  padding: 18px;
+  gap: 16px;
+  background: linear-gradient(180deg, #f7fafc 0%, #edf3f7 100%);
+}
+
+.control-panel::-webkit-scrollbar {
+  width: 10px;
+}
+
+.control-panel::-webkit-scrollbar-thumb {
+  border: 3px solid #edf3f7;
+  border-radius: 999px;
+  background: rgba(98, 112, 128, 0.42);
+}
+
+.panel-block {
+  background: #fbfdff;
+  box-shadow: 0 12px 28px rgba(24, 37, 51, 0.08);
+}
+
+.mode-switch {
+  padding: 5px;
+  gap: 5px;
+  border: 1px solid rgba(24, 37, 51, 0.1);
+  border-radius: var(--radius);
+  background: #eef4f8;
+}
+
+.mode-button,
+.view-button,
+.primary-button,
+.plain-button {
+  font-weight: 800;
+}
+
+.mode-button,
+.view-button {
+  border-color: transparent;
+  background: transparent;
+}
+
+.primary-button,
+.mode-button.active,
+.view-button.active {
+  border-color: #14202c;
+  background: linear-gradient(180deg, #182635 0%, #111b26 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 20px rgba(20, 32, 44, 0.18);
+}
+
+.plain-button {
+  border-color: rgba(24, 37, 51, 0.16);
+  background: #ffffff;
+}
+
+.plain-button:hover,
+.mode-button:not(.active):hover,
+.view-button:not(.active):hover {
+  border-color: rgba(37, 99, 216, 0.24);
+  background: #f2f7fc;
+  color: #14202c;
+}
+
+.slider-line output,
+.segment-total {
+  font-weight: 800;
+  color: #334155;
+}
+
+input[type="range"] {
+  accent-color: var(--blue);
+}
+
+.runner-control.segmented {
+  background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
+  border-color: rgba(24, 37, 51, 0.1);
+}
+
+.runner-dot {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.92), 0 0 0 4px rgba(24, 37, 51, 0.12);
+}
+
+.formula-panel {
+  border-left: 0;
+  box-shadow: inset 5px 0 0 rgba(213, 150, 36, 0.86), 0 12px 28px rgba(24, 37, 51, 0.08);
+}
+
+.calculation {
+  background: #f3f7fa;
+  border: 1px solid rgba(24, 37, 51, 0.08);
+}
+
+.formula-item {
+  background: #fff8e8;
+  border-color: rgba(213, 150, 36, 0.2);
+}
+
+.ranking-list li {
+  box-shadow: inset 3px 0 0 rgba(18, 128, 97, 0.64);
+}
+
+@media (max-width: 1040px) {
+  .race-app {
+    background: #edf3f7;
+  }
+
+  .control-panel {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 720px) {
+  .top-hud {
+    box-shadow: 0 8px 22px rgba(24, 37, 51, 0.1);
+  }
+
+  .top-hud h1 {
+    max-width: 10.5em;
+    font-size: 1.16rem;
+  }
+
+  .race-info {
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(24, 37, 51, 0.08);
+  }
+
+  .race-info > div {
+    background: rgba(251, 253, 255, 0.9);
+  }
+
+  .control-panel {
+    padding: 14px 44px 18px 12px;
+    gap: 12px;
+  }
+
+  .panel-block {
+    padding: 14px;
+    box-shadow: 0 8px 20px rgba(24, 37, 51, 0.07);
+  }
+
+  .mode-switch {
+    margin-bottom: 12px;
+  }
+
+  .primary-button,
+  .plain-button {
+    min-height: 46px;
+  }
+
+  .runner-control.segmented {
+    padding: 9px;
+  }
+
+  .segment-line {
+    grid-template-columns: 58px minmax(70px, 1fr) 84px;
+  }
+}
+/* Mobile overflow fix after visual polish */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.race-app,
+.race-stage,
+.control-panel,
+.panel-block,
+.mode-switch,
+.button-row,
+.view-grid,
+.runner-control,
+.segment-line {
+  min-width: 0;
+}
+
+.mode-switch,
+.button-row,
+.view-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.mode-button,
+.view-button,
+.primary-button,
+.plain-button {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .race-app,
+  .control-panel,
+  .panel-block {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .mode-switch {
+    padding: 4px;
+  }
+
+  .mode-button,
+  .view-button {
+    padding: 0 6px;
+    font-size: 0.94rem;
+  }
+
+  .slider-line {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .slider-line output,
+  .runner-speed,
+  .segment-total {
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .segment-line {
+    grid-template-columns: 54px minmax(0, 1fr) 76px;
+    gap: 7px;
+  }
+
+  .runner-speed {
+    font-size: 0.78rem;
   }
 }
 
@@ -1897,6 +2246,7 @@ function randomizeSpeeds() {
   state.speeds = state.speeds.map(() => Number((7.2 + Math.random() * 3.9).toFixed(2)));
   buildRunnerControls();
   resetRace();
+  resetPageScroll();
 }
 
 function setCameraMode(mode) {
@@ -1905,6 +2255,10 @@ function setCameraMode(mode) {
     button.classList.toggle("active", button.dataset.view === mode);
   });
   renderScene();
+}
+
+function resetPageScroll() {
+  window.scrollTo(0, 0);
 }
 
 function resizeRenderer() {
@@ -2744,6 +3098,7 @@ function enterRacePage() {
   landingPage.classList.add("is-hidden");
   window.setTimeout(() => {
     landingPage.hidden = true;
+    resetPageScroll();
     resizeRenderer();
   }, 440);
 }
@@ -2771,6 +3126,7 @@ buildScene();
 buildRunnerControls();
 resizeRenderer();
 resetRace();
+resetPageScroll();
 const pageParams = new URLSearchParams(window.location.search);
 if (pageParams.get("race") === "1") {
   landingPage.classList.add("is-hidden");
