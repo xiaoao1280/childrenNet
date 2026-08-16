@@ -1574,7 +1574,7 @@ function updateRunners() {
 }
 
 function getAerialTargetHeight(mobileView) {
-  const baseHeight = mobileView ? 150 : 100;
+  const baseHeight = mobileView ? 160 : 100;
   const halfFov = THREE.MathUtils.degToRad(camera.fov) / 2;
   const visibleHalfHeight = Math.tan(halfFov);
   const fitHalfWidth = stadiumHalfStraight + 6;
