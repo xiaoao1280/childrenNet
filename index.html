@@ -1522,8 +1522,8 @@ input[type="range"] {
       <aside class="control-panel">
         <section class="panel-block action-panel">
           <div class="mode-switch" aria-label="模式切换">
-            <button class="mode-button active" type="button" data-mode="game">游戏模式</button>
-            <button class="mode-button" type="button" data-mode="chase">追及观战模式</button>
+            <button class="mode-button" type="button" data-mode="game">游戏模式</button>
+            <button class="mode-button active" type="button" data-mode="chase">追及观战模式</button>
           </div>
           <h2>比赛控制</h2>
           <div class="button-row">
@@ -2774,7 +2774,8 @@ const modeCopy = {
   },
 };
 
-state.mode = "game";
+state.mode = "chase";
+state.cameraMode = "aerial";
 state.runnerCounts = { game: 9, chase: 5 };
 state.gameSegments = [
   [8.45, 8.62],
@@ -3588,6 +3589,7 @@ buildRunnerControls();
 resizeRenderer();
 resetRace();
 resetPageScroll();
+setRaceMode(state.mode);
 const pageParams = new URLSearchParams(window.location.search);
 if (pageParams.get("race") === "1") {
   landingPage.classList.add("is-hidden");
