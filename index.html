@@ -1573,6 +1573,17 @@ function updateRunners() {
   }
 }
 
+function getAerialTargetHeight(mobileView) {
+  const baseHeight = mobileView ? 140 : 100;
+  const halfFov = THREE.MathUtils.degToRad(camera.fov) / 2;
+  const visibleHalfHeight = Math.tan(halfFov);
+  const fitHalfWidth = stadiumHalfStraight + 6;
+  const fitHalfDepth = stadiumOuterRadius + 6;
+  const fitByWidth = fitHalfWidth / (visibleHalfHeight * camera.aspect);
+  const fitByDepth = fitHalfDepth / visibleHalfHeight;
+  return Math.max(baseHeight, fitByWidth, fitByDepth);
+}
+
 function updateCamera() {
   const mobileView = camera.aspect < 0.72;
   let targetPosition;
@@ -1582,7 +1593,7 @@ function updateCamera() {
     targetPosition = new THREE.Vector3(10, mobileView ? 24 : 18, homeStraightZ - 38);
     lookAt = new THREE.Vector3(28, 1, homeStraightZ + 6);
   } else if (state.cameraMode === "aerial") {
-    targetPosition = new THREE.Vector3(0, 100, 8);
+    targetPosition = new THREE.Vector3(0, getAerialTargetHeight(mobileView), 8);
     lookAt = new THREE.Vector3(0, 0, 0);
   } else if (state.cameraMode === "front") {
     targetPosition = new THREE.Vector3(106, mobileView ? 18 : 13, homeStraightZ + 15);
@@ -2265,13 +2276,13 @@ updateCamera = function() {
   let lookAt;
 
   if (state.mode === "chase") {
-    targetPosition = new THREE.Vector3(0, 100, 8);
+    targetPosition = new THREE.Vector3(0, getAerialTargetHeight(mobileView), 8);
     lookAt = new THREE.Vector3(0, 0, 0);
   } else if (state.cameraMode === "crowd") {
     targetPosition = new THREE.Vector3(10, mobileView ? 24 : 18, homeStraightZ - 38);
     lookAt = new THREE.Vector3(28, 1, homeStraightZ + 6);
   } else if (state.cameraMode === "aerial") {
-    targetPosition = new THREE.Vector3(0, 100, 8);
+    targetPosition = new THREE.Vector3(0, getAerialTargetHeight(mobileView), 8);
     lookAt = new THREE.Vector3(0, 0, 0);
   } else if (state.cameraMode === "front") {
     targetPosition = new THREE.Vector3(106, mobileView ? 18 : 13, homeStraightZ + 15);
