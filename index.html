@@ -62,9 +62,11 @@ input:focus-visible {
   min-height: 100vh;
   overflow: hidden;
   color: #ffffff;
-  background-image: url("https://commons.wikimedia.org/wiki/Special:FilePath/Noah_Lyles_at_the_2020_Gyulai_Memorial_in_Szekesfehervar%2C_Hungary.jpg?width=2400");
-  background-size: cover;
-  background-position: center;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.82) 0 8%, transparent 8.5%),
+    linear-gradient(165deg, transparent 0 50%, rgba(255, 140, 95, 0.95) 50.2% 62%, transparent 62.2%),
+    repeating-linear-gradient(165deg, transparent 0 40px, rgba(255, 255, 255, 0.84) 41px 45px, transparent 46px 88px),
+    linear-gradient(180deg, #82dcff 0 48%, #66e9ad 48% 100%);
   transition: opacity 0.42s ease, visibility 0.42s ease;
 }
 
@@ -72,13 +74,19 @@ input:focus-visible {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(12, 22, 32, 0.2) 0%, rgba(12, 22, 32, 0.64) 100%);
+  background:
+    radial-gradient(ellipse at 74% 67%, rgba(255, 166, 102, 0.98) 0 13%, rgba(255, 255, 255, 0.92) 13.4% 15%, transparent 15.4%),
+    linear-gradient(180deg, rgba(12, 32, 56, 0.08) 0%, rgba(12, 32, 56, 0.46) 100%);
 }
 
 .landing-page.is-hidden {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+}
+
+.landing-page[hidden] {
+  display: none !important;
 }
 
 .landing-shade {
@@ -132,14 +140,7 @@ input:focus-visible {
 }
 
 .photo-credit {
-  position: absolute;
-  right: 16px;
-  bottom: 12px;
-  z-index: 1;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.72rem;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  display: none;
 }
 
 .race-app {
@@ -1067,7 +1068,9 @@ body {
 }
 
 body {
-  background: linear-gradient(180deg, #e8f8ff 0%, #edf8ef 54%, #fff6dc 100%);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.14)),
+    linear-gradient(135deg, #9ee7ff 0%, #7cf2bf 48%, #ffe98f 100%);
 }
 
 .hud,
@@ -1087,7 +1090,20 @@ body {
 .panel-block,
 .result-board {
   position: relative;
+}
+
+.top-hud,
+.race-info {
+  position: absolute;
   overflow: hidden;
+}
+
+.panel-block {
+  overflow: visible;
+}
+
+.result-board {
+  overflow: auto;
 }
 
 .top-hud::before,
@@ -1329,8 +1345,8 @@ input[type="range"] {
   }
 }
 
-/* Final mobile layout guard: keep the 3D race above the controls. */
-@media (max-width: 1040px) {
+/* Final mobile layout guard: keep the 3D race above the controls on phones. */
+@media (max-width: 820px) {
   .race-app {
     display: flex;
     flex-direction: column;
@@ -1380,6 +1396,47 @@ input[type="range"] {
     right: 10px;
     bottom: 10px;
     margin: 0;
+  }
+}
+
+/* Desktop layout guard: the 3D stage stays on the left, controls scroll on the right. */
+@media (min-width: 821px) {
+  body {
+    overflow: hidden;
+  }
+
+  .race-app {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(360px, 29vw, 420px);
+    min-height: 100vh;
+    height: 100vh;
+    background:
+      linear-gradient(90deg, rgba(158, 231, 255, 0.4), rgba(124, 242, 191, 0.28)),
+      #9ee7ff;
+  }
+
+  .race-stage {
+    order: initial;
+    width: auto;
+    min-height: 100vh;
+    height: 100vh;
+  }
+
+  #raceCanvas {
+    width: 100%;
+    height: 100vh;
+  }
+
+  .control-panel {
+    order: initial;
+    width: auto;
+    height: 100vh;
+    max-height: 100vh;
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-left: 1px solid rgba(42, 61, 80, 0.14);
+    border-top: 0;
   }
 }
 
@@ -2296,7 +2353,11 @@ function updateCamera() {
     scene.fog.far = 182;
   }
   camera.up.set(0, state.cameraMode === "aerial" ? 0 : 1, state.cameraMode === "aerial" ? -1 : 0);
-  camera.position.lerp(targetPosition, state.cameraMode === "speed" ? 0.16 : 0.1);
+  if (state.cameraMode === "aerial") {
+    camera.position.copy(targetPosition);
+  } else {
+    camera.position.lerp(targetPosition, state.cameraMode === "speed" ? 0.16 : 0.1);
+  }
   camera.lookAt(lookAt);
 }
 
@@ -2990,7 +3051,11 @@ updateCamera = function() {
     scene.fog.far = 182;
   }
   camera.up.set(0, state.mode === "chase" || state.cameraMode === "aerial" ? 0 : 1, state.mode === "chase" || state.cameraMode === "aerial" ? -1 : 0);
-  camera.position.lerp(targetPosition, 0.16);
+  if (state.mode === "chase" || state.cameraMode === "aerial") {
+    camera.position.copy(targetPosition);
+  } else {
+    camera.position.lerp(targetPosition, 0.16);
+  }
   camera.lookAt(lookAt);
 };
 
